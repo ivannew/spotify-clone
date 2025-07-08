@@ -1,0 +1,100 @@
+.busqueda-container {
+  background-color: #000;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.logo {
+  height: 40px;
+  margin-right: 15px;
+}
+
+.home {
+  background-color: #232323f3;
+  border-radius: 50%;
+  height: 48px;
+  width: 48px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.home img {
+  height: 28px;
+  width: 28px;
+}
+
+.busqueda-barra {
+  display: flex;
+  align-items: center;
+  background-color: #121212;
+  border-radius: 30px;
+  padding: 0 10px;
+  flex: 1;
+  max-width: 600px;
+  margin: 0 20px;
+}
+
+.icono-lupa {
+  height: 18px;
+  margin-right: 10px;
+}
+
+.busqueda-input {
+  background-color: transparent;
+  border: none;
+  color: white;
+  flex: 1;
+  font-size: 15px;
+  height: 36px;
+}
+
+.busqueda-input::placeholder {
+  color: #b3b3b3;
+}
+
+.busqueda-input:focus {
+  outline: none;
+}
+
+.icono-mic {
+  height: 20px;
+  margin-left: 10px;
+}
+
+.acciones-derecha {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  color: #b3b3b3;
+  font-size: 14px;
+}
+
+.acciones-derecha a {
+  color: #b3b3b3;
+  text-decoration: none;
+}
+
+.acciones-derecha span {
+  color: #555;
+}
+
+.btn-login {
+  background-color: white;
+  color: black;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+  margin-left: 10px;
+}

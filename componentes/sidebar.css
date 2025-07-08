@@ -1,0 +1,57 @@
+.sidebar-container {
+  width: 260px;
+  background-color: #000; 
+  color: white;
+  padding: 20px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: sans-serif;
+   overflow-y: auto;      
+  padding-top: 120px; 
+}
+
+
+.tu-biblioteca {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: #fff;
+}
+
+
+.caja {
+  background-color: #242424;
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.caja h4 {
+  margin: 0;
+  font-size: 15px;
+  color: #fff;
+}
+
+.caja p {
+  margin: 0;
+  font-size: 13px;
+  color: #b3b3b3;
+}
+
+.caja button {
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 8px 16px;
+  font-weight: bold;
+  border-radius: 20px;
+  cursor: pointer;
+  align-self: start;
+  margin-top: 10px;
+}

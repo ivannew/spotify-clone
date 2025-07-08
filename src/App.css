@@ -1,0 +1,45 @@
+
+body {
+  margin: 0;
+  background-color: rgb(15, 15, 15);
+  font-family: sans-serif;
+  color: white;
+  height: 100vh;
+  overflow: hidden;  
+
+}
+
+
+.app-container {
+  display: flex;
+   height: 100vh;
+}
+
+
+.main-content {
+  flex: 1;
+  background-color: #121212;
+  overflow-y: auto;     
+  padding: 60px 40px 20px;
+}
+
+.content-body {
+  padding: 20px 0;
+}
+
+
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0 10px;
+  color: white;
+}
+
+
+.fila-canciones,
+.fila-artistas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
