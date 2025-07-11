@@ -1,4 +1,5 @@
 .carta-cancion {
+  position: relative; /* para poder posicionar el botón encima */
   background-color: #181818;
   border-radius: 8px;
   padding: 15px;
@@ -6,7 +7,6 @@
   transition: background-color 0.3s;
   cursor: pointer;
   width: 10%;
-  
 }
 
 .carta-cancion:hover {
@@ -15,9 +15,35 @@
 
 .carta-cancion img {
   width: 100%;
-
   border-radius: 6px;
   margin-bottom: 10px;
+}
+
+
+.btn-reproducir {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 47%;
+  left: 74%;
+  transform: translate(-50%, -50%);
+  background-color: #1db954;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  color: rgb(0, 0, 0);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+
+.carta-cancion:hover .btn-reproducir {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .carta-cancion h3 {
