@@ -1,6 +1,10 @@
-import './busqueda.css'
+import './busqueda.css';
 
-export default function Busqueda() {
+export default function Busqueda({ query, setQuery }) {
+  const handleInputChange = (e) => {
+    setQuery(e.target.value);
+  };
+
   return (
     <div className="busqueda-container">
       <img className="logo" src="https://img.icons8.com/ios11/512/FFFFFF/spotify.png" alt="Spotify" />
@@ -11,7 +15,12 @@ export default function Busqueda() {
 
       <div className="busqueda-barra">
         <img className="icono-lupa" src="https://i.ibb.co/MkNtzbyj/simbolo-de-la-interfaz-de-busqueda.png" alt="Buscar" />
-        <input className="busqueda-input" placeholder="¿Qué quieres reproducir?" />
+        <input
+          className="busqueda-input"
+          placeholder="¿Qué quieres reproducir?"
+          value={query}
+          onChange={handleInputChange}
+        />
         <img className="icono-mic" src="https://cdn-icons-png.flaticon.com/512/47/47885.png" alt="Micrófono" />
       </div>
 

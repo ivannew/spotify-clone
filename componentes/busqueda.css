@@ -98,3 +98,20 @@
   font-weight: bold;
   margin-left: 10px;
 }
+/* En móvil, ajusta tamaños */
+@media (max-width: 600px) {
+  .busqueda-container {
+    height: auto;
+    padding: 10px;
+    justify-content: center;
+  }
+
+  .home {
+    margin-right: 0;
+  }
+
+  .busqueda-barra {
+    max-width: 100%;
+    margin: 0;
+  }
+}

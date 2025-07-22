@@ -55,3 +55,48 @@
   align-self: start;
   margin-top: 10px;
 }
+.item-cancion {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.portada-cancion {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.info-cancion-lista {
+  font-size: 14px;
+  color: #ddd;
+}
+
+.titulo-cancion {
+  font-weight: 600;
+}
+
+.artista-cancion {
+  font-style: italic;
+  color: #aaa;
+}
+@media (max-width: 768px) {
+  .sidebar-container {
+    position: fixed;
+    z-index: 200;
+    background: #000;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  /* Aquí agrege una clase active para mostrarlo */
+  .sidebar-container.active {
+    transform: translateX(0);
+  }
+}

@@ -23,3 +23,10 @@
   font-size: 16px;
   margin: 0;
 }
+/* En pantallas medianas y grandes */
+@media (min-width: 768px) {
+  .carta-cancion, .carta-artista {
+    flex: 0 0 10%; /* vuelve a 10% en pantallas más grandes */
+    max-width: none;
+  }
+}

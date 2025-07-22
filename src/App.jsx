@@ -15,6 +15,12 @@ export default function App() {
   const [canciones, setCanciones] = useState([]);
   const [artistas, setArtistas] = useState([]);
   const [cancionActual, setCancionActual] = useState(null);
+  const [query, setQuery] = useState('');
+
+  // Estado para playlists: array de objetos { nombre, canciones: [] }
+  const [playlists, setPlaylists] = useState([
+    { nombre: 'Favoritas', canciones: [] }
+  ]);
 
   useEffect(() => {
     (async () => {
@@ -50,35 +56,74 @@ export default function App() {
     })();
   }, []);
 
+  // Filtrar canciones y artistas según query
+  const cancionesFiltradas = canciones.filter(c =>
+    c.titulo.toLowerCase().includes(query.toLowerCase()) ||
+    c.artista.toLowerCase().includes(query.toLowerCase())
+  );
+
+  const artistasFiltrados = artistas.filter(a =>
+    a.nombre.toLowerCase().includes(query.toLowerCase())
+  );
+
+  // Función para crear playlist nueva
+  const crearPlaylist = (nombre) => {
+    if (!nombre.trim()) return;
+    if (playlists.some(pl => pl.nombre === nombre)) {
+      alert('Ya existe una playlist con ese nombre');
+      return;
+    }
+    setPlaylists([...playlists, { nombre, canciones: [] }]);
+  };
+
+  // Función para agregar canción a playlist
+  const agregarACancionesDePlaylist = (nombrePlaylist, cancion) => {
+    setPlaylists(prev =>
+      prev.map(pl =>
+        pl.nombre === nombrePlaylist
+          ? { ...pl, canciones: [...pl.canciones, cancion] }
+          : pl
+      )
+    );
+  };
+
   return (
     <div className="app-container">
-      <Sidebar />
+      <Sidebar playlists={playlists} crearPlaylist={crearPlaylist} />
 
       <div className="main-content">
-        <Busqueda />
+        <Busqueda query={query} setQuery={setQuery} />
 
         <div className="content-body">
-          <section className="seccion-canciones">
-            <h2>Canciones del momento</h2>
-            <div className="fila-canciones">
-              {canciones.map(c => (
-                <CartaCancion key={c.id} {...c} onReproducir={() => setCancionActual(c)} />
-              ))}
-            </div>
-          </section>
+          {cancionesFiltradas.length > 0 && (
+            <section className="seccion-canciones">
+              <h2>Canciones del momento</h2>
+              <div className="fila-canciones">
+                {cancionesFiltradas.map(c => (
+                  <CartaCancion key={c.id} {...c} onReproducir={() => setCancionActual(c)} />
+                ))}
+              </div>
+            </section>
+          )}
 
-          <section className="seccion-artistas">
-            <h2>Artistas populares</h2>
-            <div className="fila-artistas">
-              {artistas.map(a => (
-                <CartaArtista key={a.id} {...a} />
-              ))}
-            </div>
-          </section>
+          {artistasFiltrados.length > 0 && (
+            <section className="seccion-artistas">
+              <h2>Artistas populares</h2>
+              <div className="fila-artistas">
+                {artistasFiltrados.map(a => (
+                  <CartaArtista key={a.id} {...a} />
+                ))}
+              </div>
+            </section>
+          )}
         </div>
       </div>
 
-      <Reproductor cancion={cancionActual} />
+      <Reproductor
+        cancion={cancionActual}
+        playlists={playlists}
+        agregarACancionesDePlaylist={agregarACancionesDePlaylist}
+      />
     </div>
   );
 }
