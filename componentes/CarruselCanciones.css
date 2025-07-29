@@ -1,0 +1,64 @@
+.carrusel-canciones-container {
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.carrusel-canciones {
+  display: flex;
+  overflow: hidden;
+  gap: 12px;
+}
+
+.carta-cancion {
+  flex: 0 0 auto;
+  width: 120px; /* Cartas más pequeñas */
+  cursor: pointer;
+  background: #181818;
+  border-radius: 8px;
+  padding: 8px;
+  box-sizing: border-box;
+  color: white;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.carta-cancion img {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 6px;
+}
+
+.carta-cancion:hover {
+  transform: scale(1.05);
+}
+
+/* Botones flechas */
+.carrusel-flecha {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.6);
+  border: none;
+  color: white;
+  font-size: 24px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 10;
+  user-select: none;
+}
+
+.carrusel-flecha:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.carrusel-flecha.izquierda {
+  left: 0;
+}
+
+.carrusel-flecha.derecha {
+  right: 0;
+}
+

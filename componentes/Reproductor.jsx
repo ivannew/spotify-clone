@@ -6,9 +6,11 @@ export default function Reproductor({ cancion, playlists, agregarACancionesDePla
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [esFavorita, setEsFavorita] = useState(false);
 
   useEffect(() => {
     const audio = audioRef.current;
+    if (!audio) return;
 
     const handleLoadedMetadata = () => {
       setDuration(audio.duration);
@@ -18,33 +20,59 @@ export default function Reproductor({ cancion, playlists, agregarACancionesDePla
       setCurrentTime(audio.currentTime);
     };
 
-    if (audio) {
-      audio.addEventListener('loadedmetadata', handleLoadedMetadata);
-      audio.addEventListener('timeupdate', handleTimeUpdate);
-    }
+    const handleEnded = () => {
+      setIsPlaying(false);
+      setCurrentTime(0);
+    };
+
+    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
+    audio.addEventListener('timeupdate', handleTimeUpdate);
+    audio.addEventListener('ended', handleEnded);
 
     return () => {
-      if (audio) {
-        audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
-        audio.removeEventListener('timeupdate', handleTimeUpdate);
-      }
+      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      audio.removeEventListener('timeupdate', handleTimeUpdate);
+      audio.removeEventListener('ended', handleEnded);
     };
-  }, [cancion]);
+  }, []);
 
-  const togglePlay = () => {
+  useEffect(() => {
+    if (!cancion) return;
+    const favoritas = playlists.find(pl => pl.nombre === "Favoritas");
+    const yaEsta = favoritas?.canciones?.some(c => c.id === cancion.id);
+    setEsFavorita(yaEsta);
+    setCurrentTime(0);
+    setDuration(0);
+    setIsPlaying(false);
+  }, [cancion, playlists]);
+
+  useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
+
     if (isPlaying) {
-      audio.pause();
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.error("Error al reproducir:", error);
+          setIsPlaying(false);
+        });
+      }
     } else {
-      audio.play();
+      audio.pause();
     }
-    setIsPlaying(!isPlaying);
+  }, [isPlaying]);
+
+  const togglePlay = () => {
+    setIsPlaying(prev => !prev);
   };
 
   const handleSeek = (e) => {
-    const newTime = parseFloat(e.target.value);
-    audioRef.current.currentTime = newTime;
+    const newTime = Number(e.target.value);
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.currentTime = newTime;
     setCurrentTime(newTime);
   };
 
@@ -54,84 +82,75 @@ export default function Reproductor({ cancion, playlists, agregarACancionesDePla
     return `${m}:${s < 10 ? '0' : ''}${s}`;
   };
 
-  // Función para agregar la canción a la playlist Favoritas
   const handleAgregarAFavoritos = () => {
     if (!cancion) return;
-
-    // Buscando la playlist Favoritas
-    const playlistFavoritas = playlists.find(pl => pl.nombre === "Favoritas");
-  
-
-    // va a verificar si la canción ya está en Favoritas
-    const yaExiste = playlistFavoritas.canciones.some(c => c.id === cancion.id);
-    
-
     agregarACancionesDePlaylist("Favoritas", cancion);
-   
+    setEsFavorita(true);
   };
 
   return (
     <div className="reproductor-container">
       {cancion && (
         <>
-          {/* Imagen de la canción */}
-          <div className="imagen-cancion">
-            <img src={cancion.imagen} alt={`Portada de ${cancion.titulo}`} />
-            <div className="info-cancion">
-              <h3>{cancion.titulo}</h3>
-              <p>{cancion.artista}</p>
-            </div>
-          </div>
-
           <audio ref={audioRef} src={cancion.audioUrl} />
 
-          <div className="controles-centro">
-            <button><img src="https://img.icons8.com/ios-filled/20/ffffff/shuffle.png" alt="Shuffle" /></button>
-            <button><img src="https://img.icons8.com/ios-filled/20/ffffff/skip-to-start.png" alt="Prev" /></button>
-            <button className="btn-play" onClick={togglePlay}>
-              {isPlaying ? (
-                <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="30" height="30">
-                  <path d="M6 4h4v16H6zM14 4h4v16h-4z" />
-                </svg>
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="30" height="30">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              )}
-            </button>
-            <button><img src="https://img.icons8.com/ios-filled/20/ffffff/end.png" alt="Next" /></button>
-            
-            
-            <button
-              title="Añadir a Favoritas"
-              onClick={handleAgregarAFavoritos}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: 'white',
-                cursor: 'pointer',
-                fontSize: '22px',
-                marginLeft: '10px',
-                fontWeight: 'bold',
-              }}
-              aria-label="Añadir a Favoritas"
-            >
-              +
-            </button>
+          <div className="reproductor-contenido">
+            <div className="imagen-info">
+              <img src={cancion.imagen} alt={`Portada de ${cancion.titulo}`} />
+              <div className="info-cancion">
+                <h3>{cancion.titulo}</h3>
+                <p>{cancion.artista}</p>
+              </div>
+            </div>
 
-            <button><img src="https://img.icons8.com/ios-filled/20/ffffff/speech-bubble-with-dots.png" alt="Chat" /></button>
-          </div>
+            <div className="controles-centro">
+              <button><img src="https://img.icons8.com/ios-filled/20/ffffff/shuffle.png" alt="Shuffle" /></button>
+              <button><img src="https://img.icons8.com/ios-filled/20/ffffff/skip-to-start.png" alt="Prev" /></button>
+              
+              <button className="btn-play" onClick={togglePlay}>
+                {isPlaying ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="30" height="30">
+                    <path d="M6 4h4v16H6zM14 4h4v16h-4z" />
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="30" height="30">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                )}
+              </button>
 
-          <div className="barra-progreso">
-            <span>{formatTime(currentTime)}</span>
-            <input
-              type="range"
-              min="0"
-              max={duration || 0}
-              value={currentTime}
-              onChange={handleSeek}
-            />
-            <span>{formatTime(duration)}</span>
+              <button><img src="https://img.icons8.com/ios-filled/20/ffffff/end.png" alt="Next" /></button>
+
+              <button
+                title="Añadir a Favoritas"
+                onClick={handleAgregarAFavoritos}
+                className="btn-favorito"
+                aria-label="Añadir a Favoritas"
+              >
+                <img
+                  src={
+                    esFavorita
+                      ? "https://img.icons8.com/fluency-systems-filled/24/fa314a/like.png"
+                      : "https://img.icons8.com/ios/24/ffffff/like--v1.png"
+                  }
+                  alt="Favorito"
+                />
+              </button>
+
+              <button><img src="https://img.icons8.com/ios-filled/20/ffffff/speech-bubble-with-dots.png" alt="Chat" /></button>
+            </div>
+
+            <div className="barra-progreso">
+              <span>{formatTime(currentTime)}</span>
+              <input
+                type="range"
+                min="0"
+                max={Math.floor(duration) || 0}
+                value={Math.floor(currentTime)}
+                onChange={handleSeek}
+              />
+              <span>{formatTime(duration)}</span>
+            </div>
           </div>
         </>
       )}

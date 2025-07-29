@@ -1,8 +1,21 @@
+import { useState } from 'react';
 import './busqueda.css';
 
-export default function Busqueda({ query, setQuery }) {
+export default function Busqueda({ query, setQuery, filtro, setFiltro }) {
+  const [menuAbierto, setMenuAbierto] = useState(false);
+
   const handleInputChange = (e) => {
     setQuery(e.target.value);
+    setFiltro(null);
+  };
+
+  const toggleMenu = () => {
+    setMenuAbierto(!menuAbierto);
+  };
+
+  const handleFiltro = (valor) => {
+    setFiltro(valor);
+    setMenuAbierto(false); // cerrar menú después de seleccionar
   };
 
   return (
@@ -24,12 +37,42 @@ export default function Busqueda({ query, setQuery }) {
         <img className="icono-mic" src="https://cdn-icons-png.flaticon.com/512/47/47885.png" alt="Micrófono" />
       </div>
 
+      {/* Hamburguesa solo visible en móvil */}
+      <div className="menu-hamburguesa" onClick={toggleMenu}>
+        ☰
+      </div>
+
+      {/* Opciones mostradas al abrir menú */}
+      <div className={`menu-opciones ${menuAbierto ? 'abierto' : ''}`}>
+        <button
+          className={filtro === 'artistas' ? 'activo' : ''}
+          onClick={() => handleFiltro('artistas')}
+        >
+          Artistas
+        </button>
+        <button
+          className={filtro === 'canciones' ? 'activo' : ''}
+          onClick={() => handleFiltro('canciones')}
+        >
+          Canciones
+        </button>
+      </div>
+
+      {/* Visible solo en pantallas grandes */}
       <div className="acciones-derecha">
-        <a href="#">Premium</a>
-        <a href="#">Ayuda</a>
-        <a href="#">Descargar</a>
+        <button
+          className={filtro === 'artistas' ? 'activo' : ''}
+          onClick={() => setFiltro('artistas')}
+        >
+          Artistas
+        </button>
+        <button
+          className={filtro === 'canciones' ? 'activo' : ''}
+          onClick={() => setFiltro('canciones')}
+        >
+          Canciones
+        </button>
         <span>|</span>
-        <a href="#">Instalar aplicación</a>
         <a href="#">Regístrate</a>
         <button className="btn-login">Iniciar sesión</button>
       </div>

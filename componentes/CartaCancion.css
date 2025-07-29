@@ -56,7 +56,25 @@
   font-size: 14px;
   margin: 4px 0 0;
 }
+.contenedor-canciones {
+  display: flex;
+  flex-wrap: wrap;       /* Permite que los hijos bajen a la siguiente fila */
+  gap: 10px;             /* Espacio entre cartas */
+  justify-content: space-between; /* Ajusta alineación */
+}
+
+
+
 @media (max-width: 480px) {
+  .carta-cancion {
+    width: calc(30% - 1px);
+    margin: 0;
+  }
+
+
+
+
+  /* Otros ajustes que tienes */
   .imagen-cancion img {
     width: 40px;
     height: 40px;

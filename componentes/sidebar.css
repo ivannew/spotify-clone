@@ -1,6 +1,6 @@
 .sidebar-container {
   width: 260px;
-  background-color: #000; 
+  background-color: #000;
   color: white;
   padding: 20px;
   height: 100vh;
@@ -8,10 +8,29 @@
   flex-direction: column;
   gap: 20px;
   font-family: sans-serif;
-   overflow-y: auto;      
-  padding-top: 120px; 
+  overflow-y: auto;
+  padding-top: 120px;
+  scrollbar-width: thin;
+  scrollbar-color: #555 #000;
+}
+button {
+  outline: none;
 }
 
+button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+
+.sidebar-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-container::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 4px;
+}
 
 .tu-biblioteca {
   display: flex;
@@ -21,7 +40,6 @@
   font-size: 18px;
   color: #fff;
 }
-
 
 .caja {
   background-color: #242424;
@@ -44,22 +62,21 @@
   color: #b3b3b3;
 }
 
-.caja button {
-  background-color: white;
-  color: black;
-  border: none;
-  padding: 8px 16px;
-  font-weight: bold;
-  border-radius: 20px;
-  cursor: pointer;
-  align-self: start;
-  margin-top: 10px;
+.lista-canciones {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
+
 .item-cancion {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-bottom: 6px;
+  position: relative;
 }
 
 .portada-cancion {
@@ -73,6 +90,7 @@
 .info-cancion-lista {
   font-size: 14px;
   color: #ddd;
+  flex: 1;
 }
 
 .titulo-cancion {
@@ -83,6 +101,24 @@
   font-style: italic;
   color: #aaa;
 }
+
+.btn-eliminar {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0 6px;
+  transition: color 0.2s ease;
+    outline: none;
+}
+
+.btn-eliminar:hover {
+  color: #ff1a1a;
+  
+}
+
 @media (max-width: 768px) {
   .sidebar-container {
     position: fixed;
@@ -95,7 +131,6 @@
     transition: transform 0.3s ease;
   }
 
-  /* Aquí agrege una clase active para mostrarlo */
   .sidebar-container.active {
     transform: translateX(0);
   }

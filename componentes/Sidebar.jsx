@@ -1,49 +1,47 @@
-import { useState } from 'react';
+import React from 'react';
 import './sidebar.css';
-
-export default function Sidebar({ playlists, crearPlaylist }) {
-  const [nombreNueva, setNombreNueva] = useState('');
-
-  const handleCrear = () => {
-    crearPlaylist(nombreNueva);
-    setNombreNueva('');
-  };
-
+export default function Sidebar({ playlists, eliminarCancionDePlaylist, isActive }) {
   return (
-    <div className="sidebar-container">
-      <div className="tu-biblioteca">
-        <span className="titulo">Tu biblioteca</span>
+    <aside className={`sidebar-container ${isActive ? 'active' : ''}`}>
+      <div className="sidebar-header">
+        <h2>Tus favoritas</h2>
       </div>
 
-      <div className="caja">
-        <h4>Crea tu primera playlist</h4>
-        <p>¡Es muy fácil! Te vamos a ayudar</p>
+      {playlists.length === 0 && <p>No hay playlists creadas.</p>}
 
-        <button onClick={handleCrear}>Crear playlist</button>
-      </div>
+      {playlists.map((playlist, index) => (
+        <div key={index} className="playlist">
+          <h3>{playlist.nombre}</h3>
 
-      {/* voy amostrar playlists y sus canciones */}
-      {playlists.map((playlist, i) => (
-        <div key={i} className="caja">
-          <h4>{playlist.nombre}</h4>
           {playlist.canciones.length === 0 ? (
-            <p>No hay canciones en esta playlist.</p>
+            <p>Esta playlist está vacía.</p>
           ) : (
-           <ul>
-  {playlist.canciones.map((cancion, idx) => (
-    <li key={idx} className="item-cancion">
-      <img src={cancion.imagen} alt={cancion.titulo} className="portada-cancion" />
-      <div className="info-cancion-lista">
-        <span className="titulo-cancion">{cancion.titulo}</span> - <span className="artista-cancion">{cancion.artista}</span>
-      </div>
-    </li>
-  ))}
-</ul>
+            <ul className="lista-canciones">
+              {playlist.canciones.map(cancion => (
+                <li key={cancion.id} className="item-cancion">
+                  <img
+                    src={cancion.imagen}
+                    alt={cancion.titulo}
+                    className="portada-cancion"
+                  />
+                  <div className="info-cancion-lista">
+                    <span className="titulo-cancion">{cancion.titulo}</span> -{' '}
+                    <span className="artista-cancion">{cancion.artista}</span>
+                  </div>
 
+                  <button
+                    className="btn-eliminar"
+                    onClick={() => eliminarCancionDePlaylist(playlist.nombre, cancion.id)}
+                    aria-label={`Eliminar ${cancion.titulo} de ${playlist.nombre}`}
+                  >
+                    ✖
+                  </button>
+                </li>
+              ))}
+            </ul>
           )}
         </div>
       ))}
-
-    </div>
+    </aside>
   );
 }

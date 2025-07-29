@@ -3,19 +3,55 @@
   bottom: 0;
   width: 100%;
   background-color: #121212;
-  padding: 10px 20px;
+  padding: 8px 15px;
   color: white;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  z-index: 1000;
+}
+
+.reproductor-contenido {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.imagen-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.imagen-info img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.info-cancion h3 {
+  margin: 0;
+  font-size: 14px;
+}
+
+.info-cancion p {
+  margin: 0;
+  font-size: 12px;
+  color: #b3b3b3;
 }
 
 .controles-centro {
   display: flex;
-  gap: 20px;
+  gap: 12px;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .controles-centro button {
@@ -27,23 +63,19 @@
 .btn-play {
   background-color: white;
   border-radius: 50%;
-  padding: 10px;
-}
-
-.btn-play img {
-  filter: invert(1);
+  padding: 6px;
 }
 
 .barra-progreso {
-  width: 100%;
-  max-width: 600px;
+  flex: 1;
   display: flex;
   align-items: center;
   gap: 10px;
+  min-width: 200px;
 }
 
 .barra-progreso span {
-  font-size: 12px;
+  font-size: 10px;
   color: #b3b3b3;
 }
 
@@ -58,34 +90,14 @@
 
 .barra-progreso input[type="range"]::-webkit-slider-thumb {
   appearance: none;
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   background: white;
   border-radius: 50%;
-  margin-top: -4px;
-}
-.imagen-cancion {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 10px;
+  margin-top: -3px;
 }
 
-.imagen-cancion img {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 4px;
-}
-
-.info-cancion h3 {
-  margin: 0;
-  font-size: 16px;
-  color: white;
-}
-
-.info-cancion p {
-  margin: 0;
-  font-size: 14px;
-  color: #b3b3b3;
+.btn-favorito img {
+  width: 22px;
+  height: 22px;
 }
