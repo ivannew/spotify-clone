@@ -5,7 +5,8 @@ import Sidebar from '../componentes/Sidebar';
 import Busqueda from '../componentes/busqueda';
 import CartaCancion from '../componentes/cartaCancion';
 import CartaArtista from '../componentes/cartaArtistas';
-import Reproductor from '../componentes/reproductor';
+import Reproductor from '../componentes/Reproductor';
+
 
 
 const API_BASE = 'https://back-5-bmdu.onrender.com/api';
