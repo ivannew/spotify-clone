@@ -7,6 +7,7 @@ import CartaCancion from '../componentes/cartaCancion';
 import CartaArtista from '../componentes/cartaArtistas';
 import Reproductor from '../componentes/reproductor';
 
+
 const API_BASE = 'https://back-5-bmdu.onrender.com/api';
 const ENDPOINT_CANCIONES = `${API_BASE}/songs`;
 const ENDPOINT_ARTISTAS = `${API_BASE}/artists`;
